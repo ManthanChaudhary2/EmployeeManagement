@@ -1,0 +1,68 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  position: relative;
+  width: 768px; /* Tablet size width */
+  background-image: url("./Image/OfficeFrountPage.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  overflow: hidden; /* Ensure the overlay covers the entire container */
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3); /* White overlay with 30% opacity */
+  z-index: 1; /* Ensure the overlay is above the background image */
+}
+
+.container > * {
+  position: relative;
+  z-index: 2; /* Ensure content is above the overlay */
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 36px; /* Increased font size */
+  color: blue; /* Changed color to blue */
+  text-align: center; /* Center the text */
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 15px 30px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}

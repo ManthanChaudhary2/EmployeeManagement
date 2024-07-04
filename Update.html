@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search and Update Employee Details</title>
+  <link rel="stylesheet" href="Add.css"> <!-- Link to your shared CSS file -->
+</head>
+<body>
+  <div class="container">
+    <h1>Search and Update Employee Details</h1>
+    <div class="search-container">
+      <label for="search-input">Search by Employee ID:</label>
+      <input type="text" id="search-input" placeholder="Enter Employee ID">
+      <button class="btn" id="search-btn">Search</button>
+    </div>
+    <div id="employee-details"></div>
+    <div class="button-container">
+      <button class="btn" id="back-btn">Back</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to fetch employee data by ID and populate the form
+    function searchAndUpdateEmployee(employeeId) {
+      const employeeDetailsDiv = document.getElementById("employee-details");
+      employeeDetailsDiv.innerHTML = ""; // Clear existing content
+
+      // Retrieve specific employee data from localStorage
+      const employeeData = JSON.parse(localStorage.getItem("employeeData-" + employeeId));
+
+      // If employeeData is found, display form to update
+      if (employeeData) {
+        // Construct HTML for updating employee details form
+        const html = `
+          <form id="update-form">
+            <input type="hidden" id="emp-id" name="emp-id" value="${employeeData['emp-id']}">
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" value="${employeeData.name}" required>
+            </div>
+            <div class="form-group">
+              <label for="age">Age:</label>
+              <input type="number" id="age" name="age" value="${employeeData.age}" required>
+            </div>
+            <div class="form-group">
+              <label for="department">Department:</label>
+              <input type="text" id="department" name="department" value="${employeeData.department}" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" value="${employeeData.email}" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone:</label>
+              <input type="tel" id="phone" name="phone" value="${employeeData.phone}" required>
+            </div>
+            <div class="button-container">
+              <button type="submit" class="btn" id="update-btn">Update</button>
+              <button type="button" class="btn cancel-btn" id="cancel-btn">Cancel</button>
+            </div>
+          </form>
+        `;
+
+        // Append the form to employeeDetailsDiv
+        employeeDetailsDiv.innerHTML = html;
+
+        // Event listener for form submission
+        const updateForm = document.getElementById("update-form");
+        updateForm.addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // Get form data
+          const formData = new FormData(updateForm);
+          const updatedEmployeeData = {};
+
+          // Convert FormData to object
+          formData.forEach((value, key) => {
+            updatedEmployeeData[key] = value;
+          });
+
+          // Update data in localStorage
+          localStorage.setItem("employeeData-" + updatedEmployeeData["emp-id"], JSON.stringify(updatedEmployeeData));
+
+          // Redirect to index.html (replace with your desired redirect)
+          window.location.href = "index.html"; // Redirect to index.html or another page
+        });
+
+        // Event listener for Cancel button
+        const cancelButton = document.getElementById("cancel-btn");
+        cancelButton.addEventListener("click", function () {
+          // Redirect to index.html (replace with your desired redirect)
+          window.location.href = "index.html"; // Redirect to index.html or another page
+        });
+      } else {
+        // Display message if no employee with the given ID is found
+        employeeDetailsDiv.innerHTML = `<p>No employee found with ID: ${employeeId}</p>`;
+      }
+    }
+
+    // Event listener for Search button
+    const searchButton = document.getElementById("search-btn");
+    searchButton.addEventListener("click", function () {
+      const searchInput = document.getElementById("search-input").value.trim();
+      if (searchInput !== "") {
+        searchAndUpdateEmployee(searchInput);
+      } else {
+        // Handle empty search input if needed
+        console.log("Please enter an Employee ID.");
+      }
+    });
+
+    // Event listener for Back button
+    const backButton = document.getElementById("back-btn");
+    backButton.addEventListener("click", function () {
+      // Redirect to index.html (or another page)
+      window.location.href = "index.html"; // Adjust as needed
+    });
+  </script>
+</body>
+</html>

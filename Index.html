@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Details</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Employee Details</h1>
+      <div class="button-container">
+        <button class="btn" id="add-button">Add</button>
+        <button class="btn" id="view-button">View</button>
+      </div>
+      <div class="button-container">
+        <button class="btn" id="remove-button">Remove</button>
+        <button class="btn" id="update-button">Update</button>
+      </div>
+    </div>
+
+    <script>
+      // Get references to the "Add", "View", and "Remove" buttons
+      const addButton = document.getElementById("add-button");
+      const viewButton = document.getElementById("view-button");
+      const removeButton = document.getElementById("remove-button");
+      const updateButton = document.getElementById("update-button");
+
+      // Add click event listener to the "Add" button
+      addButton.addEventListener("click", function () {
+        // Redirect to Add.html when the button is clicked
+        window.location.href = "Add.html";
+      });
+
+      // Add click event listener to the "View" button
+      viewButton.addEventListener("click", function () {
+        // Redirect to View.html when the button is clicked
+        window.location.href = "View.html";
+      });
+
+      // Add click event listener to the "Remove" button
+      removeButton.addEventListener("click", function () {
+        // Redirect to Remove.html when the button is clicked
+        window.location.href = "Remove.html";
+      });
+      // Add click event listener to the "Update" button
+      updateButton.addEventListener("click", function () {
+        // Redirect to Remove.html when the button is clicked
+        window.location.href = "Update.html";
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Employee Details</title>
+    <link rel="stylesheet" href="Add.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>All Employee Details</h1>
+      <div class="search-container">
+        <label for="search-input">Search by Employee ID:</label>
+        <input type="text" id="search-input" placeholder="Enter Employee ID" />
+        <button class="btn" id="search-btn">Search</button>
+      </div>
+      <div id="employee-list"></div>
+      <div class="button-container">
+        <button class="btn" id="back-btn">Back</button>
+      </div>
+    </div>
+
+    <script>
+      // Function to fetch and display all stored employee data
+      function displayAllEmployeeData() {
+        const employeeListDiv = document.getElementById("employee-list");
+        employeeListDiv.innerHTML = ""; // Clear existing content
+
+        // Iterate through all items in localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key.startsWith("employeeData-")) {
+            const employeeData = JSON.parse(localStorage.getItem(key));
+
+            // Construct HTML for displaying employee details
+            const html = `
+                        <div class="employee-item">
+                            <p><strong>Employee ID:</strong> ${employeeData["emp-id"]}</p>
+                            <p><strong>Name:</strong> ${employeeData.name}</p>
+                            <p><strong>Age:</strong> ${employeeData.age}</p>
+                            <p><strong>Department:</strong> ${employeeData.department}</p>
+                            <p><strong>Email:</strong> ${employeeData.email}</p>
+                            <p><strong>Phone:</strong> ${employeeData.phone}</p>
+                        </div>
+                    `;
+
+            // Append each employee detail to the employeeListDiv
+            employeeListDiv.innerHTML += html;
+          }
+        }
+      }
+
+      // Call function to display all employee data when the page loads
+      displayAllEmployeeData();
+
+      // Function to filter employee data based on Employee ID
+      function searchEmployeeById(employeeId) {
+        const employeeListDiv = document.getElementById("employee-list");
+        employeeListDiv.innerHTML = ""; // Clear existing content
+
+        // Retrieve specific employee data from localStorage
+        const employeeData = JSON.parse(
+          localStorage.getItem("employeeData-" + employeeId)
+        );
+
+        // If employeeData is found, display it
+        if (employeeData) {
+          // Construct HTML for displaying employee details
+          const html = `
+                    <div class="employee-item">
+                        <p><strong>Employee ID:</strong> ${employeeData["emp-id"]}</p>
+                        <p><strong>Name:</strong> ${employeeData.name}</p>
+                        <p><strong>Age:</strong> ${employeeData.age}</p>
+                        <p><strong>Department:</strong> ${employeeData.department}</p>
+                        <p><strong>Email:</strong> ${employeeData.email}</p>
+                        <p><strong>Phone:</strong> ${employeeData.phone}</p>
+                    </div>
+                `;
+
+          // Append the employee detail to the employeeListDiv
+          employeeListDiv.innerHTML = html;
+        } else {
+          // Display message if no employee with the given ID is found
+          employeeListDiv.innerHTML = `<p>No employee found with ID: ${employeeId}</p>`;
+        }
+      }
+
+      // Event listener for Search button
+      const searchButton = document.getElementById("search-btn");
+      searchButton.addEventListener("click", function () {
+        const searchInput = document
+          .getElementById("search-input")
+          .value.trim();
+        if (searchInput !== "") {
+          searchEmployeeById(searchInput);
+        } else {
+          displayAllEmployeeData(); // If search input is empty, display all data
+        }
+      });
+
+      // Event listener for Back button
+      const backButton = document.getElementById("back-btn");
+      backButton.addEventListener("click", function () {
+        // Redirect to index.html (or another page)
+        window.location.href = "index.html"; // Adjust as needed
+      });
+    </script>
+  </body>
+</html>
